@@ -2,6 +2,7 @@
 """Define Auth Module
 """
 from typing import List, TypeVar
+import re
 
 
 class Auth():
@@ -12,18 +13,30 @@ class Auth():
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """check auth require
         """
-        if path is None:
+        if path is None or excluded_paths is None:
             return True
-        if excluded_paths is None or len(excluded_paths) == 0:
-            return True
-        if path in excluded_paths and path[-1] == "/":
-            return False
+
+        for exclusion_path in excluded_paths:
+            pattern = ''
+            if exclusion_path.endswith('*'):
+                pattern = '{}.*'.format(exclusion_path[:-1])
+            elif exclusion_path.endswith('/'):
+                pattern = '{}.*'.format(exclusion_path[:-1])
+            else:
+                pattern = '{}.*'.format(exclusion_path)
+            if re.match(pattern, path):
+                return False
         return True
 
     def authorization_header(self, request=None) -> str:
         """check authorization request
         """
-        return None
+        if request is None:
+            return None
+        headers = request.headers
+        if not headers or not headers["Authorization"]:
+            return None
+        return headers["Authorization"]
 
     def current_user(self, request=None) -> TypeVar('User'):
         """check for current user
