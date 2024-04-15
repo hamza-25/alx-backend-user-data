@@ -39,3 +39,9 @@ class Auth():
         """check for current user
         """
         return None
+
+
+class BasicAuth(Auth):
+    """Define BasicAuth inherit from Auth()
+    """
+    pass
