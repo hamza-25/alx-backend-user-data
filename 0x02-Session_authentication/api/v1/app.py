@@ -31,7 +31,7 @@ def user_authenticate() -> None:
     path = auth.require_auth(request.path, endpoints)
     if auth and path:
         user = auth.current_user(request)
-        if user in None:
+        if user is None:
             abort(403)
         if not auth.authorization_header(request):
             abort(401)
