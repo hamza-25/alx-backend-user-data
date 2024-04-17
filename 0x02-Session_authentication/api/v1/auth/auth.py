@@ -3,6 +3,7 @@
 """
 from typing import List, TypeVar
 import re
+import os
 
 
 class Auth():
@@ -40,8 +41,11 @@ class Auth():
         """
         return None
 
-
-class BasicAuth(Auth):
-    """Define BasicAuth inherit from Auth()
-    """
-    pass
+    def session_cookie(self, request=None):
+        """return value of session cookie
+        """
+        if request is None:
+            return None
+        cookie = os.environ.get('SESSION_NAME', '_my_session_id')
+        session = request.cookies.get(cookie)
+        return session
