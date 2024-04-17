@@ -2,9 +2,9 @@
 """Define SessionAuth  Module
 """
 from .auth import Auth
-from base64 import b64decode
-from typing import TypeVar
-from models.user import User
+# from base64 import b64decode
+# from typing import TypeVar
+# from models.user import User
 from uuid import uuid4
 
 
