@@ -8,6 +8,7 @@ from models.user import User
 from uuid import uuid4
 from flask import request
 
+
 class SessionAuth(Auth):
     """Define SessionAuth class
     """
@@ -39,3 +40,14 @@ class SessionAuth(Auth):
         # print(self.user_id_by_session_id.get('a5dcf316-b73e-4758-b747-7fb18c7ca143'))
         # exit(4)
         return User.get(user_id)
+
+    def destroy_session(self, request=None):
+        """Destroys an auth session.
+        """
+        session_id = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(session_id)
+        if (request is None or session_id is None) or user_id is None:
+            return False
+        if session_id in self.user_id_by_session_id:
+            del self.user_id_by_session_id[session_id]
+        return True
