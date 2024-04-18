@@ -6,7 +6,7 @@ from .auth import Auth
 # from typing import TypeVar
 from models.user import User
 from uuid import uuid4
-
+from flask import request
 
 class SessionAuth(Auth):
     """Define SessionAuth class
@@ -36,6 +36,6 @@ class SessionAuth(Auth):
         # print(user_id)
         # print(self.session_cookie(request))
         # print(self.user_id_for_session_id('6810041a-1277-4258-8cb2-e7dd32df1662'))
-        # print(self.user_id_by_session_id.get("UUID('501783df-7ff6-48e8-8a56-8fafa9688bc3')"))
+        # print(self.user_id_by_session_id.get('a5dcf316-b73e-4758-b747-7fb18c7ca143'))
         # exit(4)
         return User.get(user_id)
