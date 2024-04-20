@@ -38,7 +38,7 @@ class SessionExpAuth(SessionAuth):
             if session_id in None:
                 return None
             if self.session_duration <= 0:
-                return self.session_dict['user_id']
+                return session_dict['user_id']
             if 'created_at' not in session_dict:
                 return None
             current_time = datetime.now()
