@@ -2,6 +2,8 @@
 """define module db auth
 """
 from .session_exp_auth import SessionExpAuth
+from datetime import datetime
+from models.user_session import UserSession
 
 
 class SessionDBAuth(SessionExpAuth):
@@ -10,7 +12,16 @@ class SessionDBAuth(SessionExpAuth):
     def create_session(self, user_id=None) -> str:
         """cretae session id from SessionDBAuth
         """
-        return super().create_session(user_id)
+        session_id = super().create_session(user_id)
+        if not isinstance(session_id, str):
+            return None
+        session_items = {
+            'user_id': user_id,
+            'created_at': datetime.now(),
+        }
+        session_user = UserSession(session_items)
+        session_user.save()
+        return session_id
 
     def user_id_for_session_id(self, session_id=None) -> str:
         """returns the User ID by requesting UserSession
