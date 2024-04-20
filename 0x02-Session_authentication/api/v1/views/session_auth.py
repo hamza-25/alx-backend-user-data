@@ -13,7 +13,7 @@ def hanlde_all_session():
     """login with session
     """
     email = request.form.get('email')
-    password = request.form.get('email')
+    password = request.form.get('password')
     if email is None or len(email) == 0:
         return jsonify({"error": "email missing"}), 400
     if password is None or len(password) == 0:
@@ -22,7 +22,9 @@ def hanlde_all_session():
         users = User.search({'email': email})
     except Exception:
         return jsonify({"error": "no user found for this email"}), 404
-    valid_pass = User.is_valid_password(password)
+    if not users:
+        return jsonify({"error": "no user found for this email"}), 404
+    valid_pass = users[0].is_valid_password(password)
     if not valid_pass:
         return jsonify({"error": "wrong password"}), 401
     from api.v1.app import auth
