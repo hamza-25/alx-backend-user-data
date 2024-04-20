@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""
+"""Define SessionExpAuth Module
 """
 from .session_auth import SessionAuth
 import os
