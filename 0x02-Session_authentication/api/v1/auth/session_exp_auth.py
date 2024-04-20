@@ -33,17 +33,18 @@ class SessionExpAuth(SessionAuth):
     def user_id_for_session_id(self, session_id=None) -> str:
         """return user id by session_id from ExpAuth
         """
-        if session_id in self.user_id_by_session_id:
-            session_dict = self.user_id_by_session_id[session_id]
-            if session_id in None:
-                return None
-            if self.session_duration <= 0:
-                return session_dict['user_id']
-            if 'created_at' not in session_dict:
-                return None
-            current_time = datetime.now()
-            duration_time = timedelta(seconds=self.session_duration)
-            exp = session_dict['created_at'] + duration_time
-            if exp < current_time:
-                return None
+        if session_id is None:
+            return None
+        if session_id not in self.user_id_by_session_id:
+            return None
+        session_dict = self.user_id_by_session_id[session_id]
+        if self.session_duration <= 0:
             return session_dict['user_id']
+        if 'created_at' not in session_dict:
+            return None
+        current_time = datetime.now()
+        duration_time = timedelta(seconds=self.session_duration)
+        exp = session_dict['created_at'] + duration_time
+        if exp < current_time:
+            return None
+        return session_dict['user_id']
