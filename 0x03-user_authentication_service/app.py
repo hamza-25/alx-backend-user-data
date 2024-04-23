@@ -2,7 +2,7 @@
 """Define app Flask
 """
 from auth import Auth
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect, url_for
 from sqlalchemy.orm.exc import NoResultFound
 
 
@@ -55,6 +55,7 @@ def logout() -> str:
     except NoResultFound:
         abort(403)
     AUTH.destroy_session(user.id)
+    redirect(url_for('/'))
 
 
 if __name__ == "__main__":
