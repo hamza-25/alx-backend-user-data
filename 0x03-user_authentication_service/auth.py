@@ -4,10 +4,8 @@
 import bcrypt
 from db import DB
 from user import User
-from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 from uuid import uuid4
-from typing import Union
 
 
 def _hash_password(password: str) -> bytes:
@@ -27,16 +25,17 @@ class Auth:
     """
 
     def __init__(self):
+        """initialization Auth class
+        """
         self._db = DB()
 
     def register_user(self, email: str, password: str) -> User:
         """register user
         """
         try:
-            user = self._db.find_user_by(email=email)
+            self._db.find_user_by(email=email)
         except NoResultFound:
-            hashed_pass = _hash_password(password)
-            user = self._db.add_user(email, hashed_pass)
+            user = self._db.add_user(email, _hash_password(password))
             return user
         raise ValueError(f'User {email} already exists')
 
