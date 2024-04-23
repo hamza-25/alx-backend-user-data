@@ -44,7 +44,7 @@ class DB:
             user = None
         return user
 
-    def find_user_by(self, **kwargs: dict) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """filter user by email
         """
         filltred = ({key: value for key, value in kwargs.items()
