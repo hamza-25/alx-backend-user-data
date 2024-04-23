@@ -57,7 +57,7 @@ def logout() -> str:
     return redirect(url_for('home'))
 
 
-app.route('/profile', methods=['GET'], strict_slashes=False)
+@app.route('/profile', strict_slashes=False)
 def profile()-> str:
     """return user profil if exist
     """
