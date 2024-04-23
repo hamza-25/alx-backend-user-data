@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Define User Model
 """
-from sqlalchemy import Column, Integer, String, Nullable
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
