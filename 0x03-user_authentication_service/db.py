@@ -60,8 +60,12 @@ class DB:
         """update user by id
         """
         user = self.find_user_by(id=user_id)
+        if user is None:
+            return
         to_update = ({key: value for key, value in kwargs.items()
                      if hasattr(User, key)})
+        if not to_update:
+            raise ValueError()
         for key, value in to_update.items():
             setattr(user, key, value)
         self._session.commit()
