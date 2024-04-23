@@ -58,7 +58,7 @@ def logout() -> str:
 
 
 @app.route('/profile', strict_slashes=False)
-def profile()-> str:
+def profile() -> str:
     """return user profil if exist
     """
     session_id = request.cookies.get('session_id')
@@ -66,7 +66,6 @@ def profile()-> str:
     if user is None:
         abort(403)
     return jsonify({"email": user.email})
-    
 
 
 if __name__ == "__main__":
